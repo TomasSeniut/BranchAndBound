@@ -13,7 +13,7 @@ void InitializeArray(int n, int array[]);
 int IsAllCitiesVisited(int n, int cityArray[]);
 void CopyArray(int n, int from[], int to[]);
 
-double SimpleBranchAndBound(int n, double distanceMatrix[][n], int solution[]);
+double SimpleBranchAndBound(double bestKnownSolution, int n, double distanceMatrix[][n], int solution[]);
 
 typedef struct {
     float x;

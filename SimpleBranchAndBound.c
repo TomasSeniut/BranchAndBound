@@ -53,17 +53,18 @@ void push(node data) {
     }
 }
 
-double SimpleBranchAndBound(int n, double distanceMatrix[][n], int solution[]) {
+double SimpleBranchAndBound(double bestKnownSolution, int n, double distanceMatrix[][n], int solution[]) {
 
     int startCity = 0;
-    double bestSolutionEstimate = 7000;
+    double bestSolutionEstimate = bestKnownSolution;
+    node problemSolution;
 
     node initialProblem;
     initialProblem.currentPathLength = 0;
     initialProblem.currentCity = startCity;
     InitializeArray(n, initialProblem.citiesVisited);
 
-    initialProblem.citiesVisited[initialProblem.currentCity] = 1;
+    initialProblem.citiesVisited[initialProblem.currentCity] = 1 + startCity;
 
     push(initialProblem);
 
@@ -92,6 +93,7 @@ double SimpleBranchAndBound(int n, double distanceMatrix[][n], int solution[]) {
                 if (bestSolutionEstimate > pathEstimate) {
                     printf("\n Better solution found: %f\n", pathEstimate);
                     bestSolutionEstimate = pathEstimate;
+                    problemSolution = problem;
                 }
             } else {
                 node subproblem;
@@ -99,11 +101,13 @@ double SimpleBranchAndBound(int n, double distanceMatrix[][n], int solution[]) {
                 subproblem.currentPathLength =
                         problem.currentPathLength + distanceMatrix[problem.currentCity][subproblem.currentCity];
                 CopyArray(n, problem.citiesVisited, subproblem.citiesVisited);
-                subproblem.citiesVisited[subproblem.currentCity] = 1;
+                subproblem.citiesVisited[subproblem.currentCity] = 1 + subproblem.currentCity;
 
                 push(subproblem);
             }
         }
     }
 
+    CopyArray(n, problemSolution.citiesVisited, solution);
+    return problemSolution.currentPathLength + distanceMatrix[problemSolution.currentCity][startCity];
 }

@@ -1,4 +1,5 @@
 
+#include <stdio.h>
 #include "structures.h"
 
 void PrintPointArray(point *array, int n);
@@ -18,7 +19,7 @@ int main() {
 
     int n = N;
 
-    char dataFileName[20] = "dj38.tsp";
+    char dataFileName[20] = "../dj38.tsp";
 
     point coordinates[N];
     LoadFileToPointArray(dataFileName, coordinates);
@@ -27,8 +28,11 @@ int main() {
     PopulateDistanceMatrix(coordinates, n, distanceArray);
 
     int solution[N] = { 0 };
-    //double path = BestOfNNearestNeighbourMethod(5, N, distanceArray, solution);
-    double path = SimpleBranchAndBound(n, distanceArray, solution);
+    double pathEstimate = BestOfNNearestNeighbourMethod(5, N, distanceArray, solution);
+
+    printf("%f\n", pathEstimate);
+
+    double path = SimpleBranchAndBound(pathEstimate, n, distanceArray, solution);
 
     PrintResult(path, N, solution);
     WriteResultToPythonFile("../Plotting/solution.py", N, solution, dataFileName);
