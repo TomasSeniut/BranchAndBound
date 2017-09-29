@@ -53,18 +53,22 @@ void push(node data) {
     }
 }
 
-double SimpleBranchAndBound(double bestKnownSolution, int n, double distanceMatrix[][n], int solution[]) {
+double SimpleBranchAndBound(int startCity, double bestKnownSolution, int n, double distanceMatrix[][n], int solution[]) {
 
-    int startCity = 0;
-    double bestSolutionEstimate = bestKnownSolution;
-    node problemSolution;
+    double bestSolutionEstimate;
+    if (bestKnownSolution == 0) {
+        bestSolutionEstimate = DBL_MAX;
+    } else {
+        bestSolutionEstimate = bestKnownSolution;
+    }
 
     node initialProblem;
     initialProblem.currentPathLength = 0;
+    initialProblem.stepsTaken = 1;
     initialProblem.currentCity = startCity;
     InitializeArray(n, initialProblem.citiesVisited);
 
-    initialProblem.citiesVisited[initialProblem.currentCity] = 1 + startCity;
+    initialProblem.citiesVisited[initialProblem.currentCity] = initialProblem.stepsTaken;
 
     push(initialProblem);
 
@@ -72,7 +76,7 @@ double SimpleBranchAndBound(double bestKnownSolution, int n, double distanceMatr
     while (!isEmpty())
     {
         if (++h % 10000000 == 0 ) {
-            printf("%e\n", (double)h);
+            printf("Hit %e nodes\n", (double)h);
         }
 
         node problem = pop();
@@ -91,23 +95,25 @@ double SimpleBranchAndBound(double bestKnownSolution, int n, double distanceMatr
 
             if (allCitiesVisited) {
                 if (bestSolutionEstimate > pathEstimate) {
-                    printf("\n Better solution found: %f\n", pathEstimate);
+                    printf("Better solution found: %f\n", pathEstimate);
                     bestSolutionEstimate = pathEstimate;
-                    problemSolution = problem;
+                    InvertCopyArray(n, problem.citiesVisited, solution);
                 }
             } else {
                 node subproblem;
                 subproblem.currentCity = i;
+                subproblem.stepsTaken = problem.stepsTaken + 1;
                 subproblem.currentPathLength =
                         problem.currentPathLength + distanceMatrix[problem.currentCity][subproblem.currentCity];
                 CopyArray(n, problem.citiesVisited, subproblem.citiesVisited);
-                subproblem.citiesVisited[subproblem.currentCity] = 1 + subproblem.currentCity;
+                subproblem.citiesVisited[subproblem.currentCity] = problem.stepsTaken;
 
                 push(subproblem);
             }
         }
     }
 
-    CopyArray(n, problemSolution.citiesVisited, solution);
-    return problemSolution.currentPathLength + distanceMatrix[problemSolution.currentCity][startCity];
+    printf("Nodes checked: %d\n", h);
+
+    return bestSolutionEstimate;
 }
