@@ -52,6 +52,20 @@ void LoadFileToPointArray(char *fileName, point *coordinate) {
     fclose(fp);
 }
 
+void LoadFileToDistanceMatrix(char *fileName, int n, double distanceMatrix[][n]) {
+    FILE *fp;
+
+    fp = fopen(fileName, "r");
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            fscanf(fp, "%lf", &distanceMatrix[i][j]);
+        }
+    }
+
+    fclose(fp);
+}
+
 void PopulateDistanceMatrix(point *array, int n, double distanceMatrix[][n]) {
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
@@ -66,7 +80,7 @@ void PrintResult(double totalPath, int n, int solution[]) {
     printf("Cities visited in this order:\n");
 
     for (int i = 0; i < n; ++i) {
-        printf("%d ", solution[i]);
+        printf("%d ", solution[i] + 1);
     }
 }
 

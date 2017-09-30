@@ -9,6 +9,7 @@ void WriteResultToPythonFile(char *fileName, int n, int solution[], char *dataFi
 
 void LoadFileToPointArray(char *fileName, point *array);
 void PopulateDistanceMatrix(point *array, int n, double distanceMatrix[][n]);
+void LoadFileToDistanceMatrix(char *fileName, int n, double distanceMatrix[][n]);
 
 double NearestNeighbourMethod(int startCity, int n, double distanceMatrix[][n], int solution[]);
 double BestOfNNearestNeighbourMethod(int T, int n, double distanceMatrix[][n], int solution[]);

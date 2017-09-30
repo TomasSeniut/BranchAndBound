@@ -2,19 +2,19 @@ from solution import *
 import numpy as np
 import matplotlib.pyplot as plt
 
-fileName = dataFileName.split('/')[-1]
+fileName = dataFileName.replace('.dm', '.tsp').split('/')[-1]
 
-y, x = np.loadtxt(dataFileName, unpack=True)
+y, x = np.loadtxt(dataFileName.replace('.dm', '.tsp'), unpack=True)
 
-alfa_omega = [solution[0], solution[-1]]
+y_ordered = np.append(y[solution], y[solution[0]])
+x_ordered = np.append(x[solution], x[solution[0]])
 
 plt.scatter(x, y, c = 'k', alpha = 0.8, lw = 0)
+plt.plot(x_ordered, y_ordered, c = 'b')
 
-plt.plot(x[solution], y[solution], '->')
-plt.plot(x[alfa_omega], y[alfa_omega], c = 'b')
-
-for label, x, y in zip(range(len(x)), x, y):
-	plt.annotate(label, xy = (x,y))
+for solution_order, point_order, x_, y_ in zip(range(len(y)), solution, x_ordered, y_ordered):
+	plt.annotate(solution_order, xy = (x_,y_), horizontalalignment='left', verticalalignment='bottom')
+	plt.annotate(point_order, xy = (x_,y_), horizontalalignment='right', verticalalignment='top')
 
 plt.title(fileName)
 

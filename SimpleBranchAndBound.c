@@ -13,7 +13,7 @@ int top = -1;
 
 int isEmpty() {
 
-    if(top == -1)
+    if (top == -1)
         return 1;
     else
         return 0;
@@ -21,7 +21,7 @@ int isEmpty() {
 
 int isFull() {
 
-    if(top == MAXSIZE)
+    if (top == MAXSIZE)
         return 1;
     else
         return 0;
@@ -34,7 +34,7 @@ node peek() {
 node pop() {
     node data;
 
-    if(!isEmpty()) {
+    if (!isEmpty()) {
         data = stack[top];
         top = top - 1;
         return data;
@@ -45,7 +45,7 @@ node pop() {
 
 void push(node data) {
 
-    if(!isFull()) {
+    if (!isFull()) {
         top = top + 1;
         stack[top] = data;
     } else {
@@ -53,7 +53,8 @@ void push(node data) {
     }
 }
 
-double SimpleBranchAndBound(int startCity, double bestKnownSolution, int n, double distanceMatrix[][n], int solution[]) {
+double
+SimpleBranchAndBound(int startCity, double bestKnownSolution, int n, double distanceMatrix[][n], int solution[]) {
 
     double bestSolutionEstimate;
     if (bestKnownSolution == 0) {
@@ -73,18 +74,27 @@ double SimpleBranchAndBound(int startCity, double bestKnownSolution, int n, doub
     push(initialProblem);
 
     int h = 0;
-    while (!isEmpty())
-    {
-        if (++h % 10000000 == 0 ) {
-            printf("Hit %e nodes\n", (double)h);
+    while (!isEmpty()) {
+        if (++h % 10000000 == 0) {
+            printf("Hit %e nodes\n", (double) h);
         }
 
         node problem = pop();
 
-        for (int i = 0; i < N; ++i) {
-            int allCitiesVisited = IsAllCitiesVisited(n, problem.citiesVisited);
+        if (IsAllCitiesVisited(n, problem.citiesVisited)) {
+            double pathLength = problem.currentPathLength + distanceMatrix[problem.currentCity][startCity];
 
-            if (problem.citiesVisited[i] && !allCitiesVisited) {
+            if (bestSolutionEstimate > pathLength) {
+                printf("Better solution found: %f\n", pathLength);
+                bestSolutionEstimate = pathLength;
+                InvertCopyArray(n, problem.citiesVisited, solution);
+            }
+
+            continue;
+        }
+
+        for (int i = 0; i < N; ++i) {
+            if (problem.citiesVisited[i]) {
                 continue;
             }
 
@@ -93,23 +103,15 @@ double SimpleBranchAndBound(int startCity, double bestKnownSolution, int n, doub
                 continue;
             }
 
-            if (allCitiesVisited) {
-                if (bestSolutionEstimate > pathEstimate) {
-                    printf("Better solution found: %f\n", pathEstimate);
-                    bestSolutionEstimate = pathEstimate;
-                    InvertCopyArray(n, problem.citiesVisited, solution);
-                }
-            } else {
-                node subproblem;
-                subproblem.currentCity = i;
-                subproblem.stepsTaken = problem.stepsTaken + 1;
-                subproblem.currentPathLength =
-                        problem.currentPathLength + distanceMatrix[problem.currentCity][subproblem.currentCity];
-                CopyArray(n, problem.citiesVisited, subproblem.citiesVisited);
-                subproblem.citiesVisited[subproblem.currentCity] = problem.stepsTaken;
+            node subproblem;
+            subproblem.currentCity = i;
+            subproblem.stepsTaken = problem.stepsTaken + 1;
+            subproblem.currentPathLength =
+                    problem.currentPathLength + distanceMatrix[problem.currentCity][subproblem.currentCity];
+            CopyArray(n, problem.citiesVisited, subproblem.citiesVisited);
+            subproblem.citiesVisited[subproblem.currentCity] = problem.stepsTaken;
 
-                push(subproblem);
-            }
+            push(subproblem);
         }
     }
 
