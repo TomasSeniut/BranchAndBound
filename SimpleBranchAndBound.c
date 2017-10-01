@@ -4,64 +4,11 @@
 
 #include <float.h>
 #include <stdio.h>
-#include "structures.h"
+#include "DataStructures/structures.h"
 
-#define MAXSIZE 1000
-
-node stack[MAXSIZE];
-int top = -1;
-
-int isEmpty() {
-
-    if (top == -1)
-        return 1;
-    else
-        return 0;
-}
-
-int isFull() {
-
-    if (top == MAXSIZE)
-        return 1;
-    else
-        return 0;
-}
-
-node peek() {
-    return stack[top];
-}
-
-node pop() {
-    node data;
-
-    if (!isEmpty()) {
-        data = stack[top];
-        top = top - 1;
-        return data;
-    } else {
-        printf("Could not retrieve data, Stack is empty.\n");
-    }
-}
-
-void push(node data) {
-
-    if (!isFull()) {
-        top = top + 1;
-        stack[top] = data;
-    } else {
-        printf("Could not insert data, Stack is full.\n");
-    }
-}
-
-double
-SimpleBranchAndBound(int startCity, double bestKnownSolution, int n, double distanceMatrix[][n], int solution[]) {
-
-    double bestSolutionEstimate;
-    if (bestKnownSolution == 0) {
-        bestSolutionEstimate = DBL_MAX;
-    } else {
-        bestSolutionEstimate = bestKnownSolution;
-    }
+double SimpleBranchAndBound(int startCity, double bound, int n, double distanceMatrix[][n], int solution[]) {
+    InitializeArray(n, solution);
+    double bestSolutionEstimate = bound ? bound : DBL_MAX;
 
     node initialProblem;
     initialProblem.currentPathLength = 0;
@@ -73,10 +20,11 @@ SimpleBranchAndBound(int startCity, double bestKnownSolution, int n, double dist
 
     push(initialProblem);
 
-    int h = 0;
+    int count1 = 0, count2 = 0;
     while (!isEmpty()) {
-        if (++h % 10000000 == 0) {
-            printf("Hit %e nodes\n", (double) h);
+        if (++count1 % 10000000 == 0) {
+            count1 = 0;
+            printf("Hit %5de+007 nodes\n", ++count2);
         }
 
         node problem = pop();
@@ -84,7 +32,7 @@ SimpleBranchAndBound(int startCity, double bestKnownSolution, int n, double dist
         if (IsAllCitiesVisited(n, problem.citiesVisited)) {
             double pathLength = problem.currentPathLength + distanceMatrix[problem.currentCity][startCity];
 
-            if (bestSolutionEstimate > pathLength) {
+            if (bestSolutionEstimate >= pathLength) {
                 printf("Better solution found: %f\n", pathLength);
                 bestSolutionEstimate = pathLength;
                 InvertCopyArray(n, problem.citiesVisited, solution);
@@ -115,7 +63,7 @@ SimpleBranchAndBound(int startCity, double bestKnownSolution, int n, double dist
         }
     }
 
-    printf("Nodes checked: %d\n", h);
+    printf("Nodes checked: %d%d\n", count2, count1);
 
     return bestSolutionEstimate;
 }

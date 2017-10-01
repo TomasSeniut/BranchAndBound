@@ -5,7 +5,7 @@
 #include <float.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "structures.h"
+#include "constants.h"
 
 int VisitNearestNeighbour(int currentCity, int n, double distanceMatrix[][n], int visitedCities[], double *distance);
 double NearestNeighbourMethod(int startCity, int n, double distanceMatrix[][n], int solution[]);

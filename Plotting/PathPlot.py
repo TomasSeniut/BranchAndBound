@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 fileName = dataFileName.replace('.dm', '.tsp').split('/')[-1]
 
-y, x = np.loadtxt(dataFileName.replace('.dm', '.tsp'), unpack=True)
+x, y = np.loadtxt(dataFileName.replace('.dm', '.tsp'), unpack=True)
 
 y_ordered = np.append(y[solution], y[solution[0]])
 x_ordered = np.append(x[solution], x[solution[0]])
