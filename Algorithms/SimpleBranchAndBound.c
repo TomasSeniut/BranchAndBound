@@ -4,30 +4,31 @@
 
 #include <float.h>
 #include <stdio.h>
-#include "DataStructures/structures.h"
+#include "../DataStructures/definitions.h"
+#include "../utils.h"
 
 double SimpleBranchAndBound(int startCity, double bound, int n, double distanceMatrix[][n], int solution[]) {
     InitializeArray(n, solution);
     double bestSolutionEstimate = bound ? bound : DBL_MAX;
 
-    node initialProblem;
+    constant_stack_node initialProblem;
     initialProblem.currentPathLength = 0;
-    initialProblem.stepsTaken = 1;
+    initialProblem.stepsTaken = 0;
     initialProblem.currentCity = startCity;
     InitializeArray(n, initialProblem.citiesVisited);
 
-    initialProblem.citiesVisited[initialProblem.currentCity] = initialProblem.stepsTaken;
+    initialProblem.citiesVisited[initialProblem.currentCity] = initialProblem.stepsTaken + 1;
 
-    push(initialProblem);
+    constant_stack_push(initialProblem);
 
     int count1 = 0, count2 = 0;
-    while (!isEmpty()) {
+    while (!constant_stack_isEmpty()) {
         if (++count1 % 10000000 == 0) {
             count1 = 0;
             printf("Hit %5de+007 nodes\n", ++count2);
         }
 
-        node problem = pop();
+        constant_stack_node problem = constant_stack_pop();
 
         if (IsAllCitiesVisited(n, problem.citiesVisited)) {
             double pathLength = problem.currentPathLength + distanceMatrix[problem.currentCity][startCity];
@@ -51,15 +52,15 @@ double SimpleBranchAndBound(int startCity, double bound, int n, double distanceM
                 continue;
             }
 
-            node subproblem;
+            constant_stack_node subproblem;
             subproblem.currentCity = i;
             subproblem.stepsTaken = problem.stepsTaken + 1;
             subproblem.currentPathLength =
                     problem.currentPathLength + distanceMatrix[problem.currentCity][subproblem.currentCity];
             CopyArray(n, problem.citiesVisited, subproblem.citiesVisited);
-            subproblem.citiesVisited[subproblem.currentCity] = problem.stepsTaken;
+            subproblem.citiesVisited[subproblem.currentCity] = problem.stepsTaken + 1;
 
-            push(subproblem);
+            constant_stack_push(subproblem);
         }
     }
 

@@ -3,7 +3,7 @@
 //
 
 #include <stdio.h>
-#include "../DataStructures/structures.h"
+#include "../DataStructures/definitions.h"
 
 void LoadFileToPointArray(char *fileName, point *coordinate) {
     FILE *fp;

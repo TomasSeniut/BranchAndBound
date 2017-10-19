@@ -3,14 +3,14 @@
 //
 
 #include <stdio.h>
-#include "structures.h"
+#include "definitions.h"
 
-#define MAXSIZE 1000
+#define STATIC_STACK_MAXSIZE 1000
 
-stackData stack[MAXSIZE];
+constant_stack_node stack[STATIC_STACK_MAXSIZE];
 int top = -1;
 
-int isEmpty() {
+int constant_stack_isEmpty() {
 
     if (top == -1)
         return 1;
@@ -18,18 +18,18 @@ int isEmpty() {
         return 0;
 }
 
-int isFull() {
+int constant_stack_isFull() {
 
-    if (top == MAXSIZE)
+    if (top == STATIC_STACK_MAXSIZE)
         return 1;
     else
         return 0;
 }
 
-stackData pop() {
-    stackData data;
+constant_stack_node constant_stack_pop() {
+    constant_stack_node data;
 
-    if (!isEmpty()) {
+    if (!constant_stack_isEmpty()) {
         data = stack[top];
         top = top - 1;
         return data;
@@ -38,9 +38,9 @@ stackData pop() {
     }
 }
 
-void push(stackData data) {
+void constant_stack_push(constant_stack_node data) {
 
-    if (!isFull()) {
+    if (!constant_stack_isFull()) {
         top = top + 1;
         stack[top] = data;
     } else {

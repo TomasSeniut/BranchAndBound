@@ -5,10 +5,10 @@
 #include <float.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "constants.h"
+#include "../utils.h"
 
-int VisitNearestNeighbour(int currentCity, int n, double distanceMatrix[][n], int visitedCities[], double *distance);
 double NearestNeighbourMethod(int startCity, int n, double distanceMatrix[][n], int solution[]);
+int VisitNearestNeighbour(int currentCity, int n, double distanceMatrix[][n], int visitedCities[], double *distance);
 
 double BestOfNNearestNeighbourMethod(int times, int n, double distanceMatrix[][n], int solution[]) {
     double bestLength = DBL_MAX;

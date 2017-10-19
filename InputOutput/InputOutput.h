@@ -2,7 +2,7 @@
 // Created by Tomas on 2017.09.30.
 //
 
-#include "../DataStructures/structures.h"
+#include "../DataStructures/definitions.h"
 
 #ifndef CREATORTEST_INPUTOUTPUT_H
 #define CREATORTEST_INPUTOUTPUT_H

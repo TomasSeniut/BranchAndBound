@@ -3,7 +3,21 @@
 //
 
 #include <math.h>
-#include "DataStructures/structures.h"
+#include "DataStructures/definitions.h"
+#include "utils.h"
+
+double calculate_distance(point point1, point point2) {
+    return sqrt(pow(point1.y - point2.y, 2) + pow(point1.x - point2.x, 2));
+}
+
+void PopulateDistanceMatrix(point *array, int n, double distanceMatrix[][n]) {
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            double temp = calculate_distance(array[i], array[j]);
+            distanceMatrix[i][j] = temp;
+        }
+    }
+}
 
 void CopyArray(int n, int from[], int to[]) {
     for (int i = 0; i < n; ++i) {
@@ -31,17 +45,4 @@ int IsAllCitiesVisited(int n, int cityArray[]) {
     }
 
     return 1;
-}
-
-double calculate_distance(point point1, point point2) {
-    return sqrt(pow(point1.y - point2.y, 2) + pow(point1.x - point2.x, 2));
-}
-
-void PopulateDistanceMatrix(point *array, int n, double distanceMatrix[][n]) {
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n; ++j) {
-            double temp = calculate_distance(array[i], array[j]);
-            distanceMatrix[i][j] = temp;
-        }
-    }
 }
