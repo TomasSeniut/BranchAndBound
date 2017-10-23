@@ -18,7 +18,7 @@ double SimpleBranchAndBoundLinkedStack(int startCity, double bound, int n, doubl
 
     struct linked_node *stack = linked_stack_init();
 
-    dynamic_stack_data initialProblem;
+    linked_stack_data initialProblem;
     initialProblem.currentCity = startCity;
     initialProblem.currentPathLength = 0;
     initialProblem.stepsTaken = 0;
@@ -34,7 +34,7 @@ double SimpleBranchAndBoundLinkedStack(int startCity, double bound, int n, doubl
             printf("Hit %5de+007 nodes\n", ++count2);
         }
 
-        dynamic_stack_data problem;
+        linked_stack_data problem;
         stack = linked_stack_pop(stack, &problem);
 
         if (IsAllCitiesVisited(n, problem.citiesVisited)) {
@@ -59,7 +59,7 @@ double SimpleBranchAndBoundLinkedStack(int startCity, double bound, int n, doubl
                 continue;
             }
 
-            dynamic_stack_data subproblem;
+            linked_stack_data subproblem;
             subproblem.currentCity = i;
             subproblem.stepsTaken = problem.stepsTaken + 1;
             subproblem.currentPathLength =

@@ -10,5 +10,6 @@ double BestOfNNearestNeighbourMethod(int T, int n, double distanceMatrix[][n], i
 double SimpleBranchAndBound(int startCity, double bound, int n, double distanceMatrix[][n], int solution[]);
 double SimpleBranchAndBoundDynamicStack(int startCity, double bound, int n, double distanceMatrix[][n], int solution[]);
 double SimpleBranchAndBoundLinkedStack(int startCity, double bound, int n, double distanceMatrix[][n], int solution[]);
+double ParallelBranchAndBound(int startCity, double bound, int n, double distanceMatrix[][n], int solution[]);
 
 #endif //CREATORTEST_ALGORITHMS_H

@@ -18,5 +18,5 @@ for solution_order, point_order, x_, y_ in zip(range(len(y)), solution, x_ordere
 
 plt.title(fileName)
 
-plt.savefig('../PlotResults/' + fileName + '.png')
+plt.savefig('PlotResults/' + fileName + '.png')
 plt.show()

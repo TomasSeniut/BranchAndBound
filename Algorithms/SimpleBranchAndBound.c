@@ -21,11 +21,10 @@ double SimpleBranchAndBound(int startCity, double bound, int n, double distanceM
 
     constant_stack_push(initialProblem);
 
-    int count1 = 0, count2 = 0;
+    unsigned long count = 0;
     while (!constant_stack_isEmpty()) {
-        if (++count1 % 10000000 == 0) {
-            count1 = 0;
-            printf("Hit %5de+007 nodes\n", ++count2);
+        if (++count % 10000000 == 0) {
+            printf("Hit %5e nodes\n", count);
         }
 
         constant_stack_node problem = constant_stack_pop();
@@ -64,7 +63,7 @@ double SimpleBranchAndBound(int startCity, double bound, int n, double distanceM
         }
     }
 
-    printf("Nodes checked: %d%d\n", count2, count1);
+    printf("Nodes checked: %ld\n", count);
 
     return bestSolutionEstimate;
 }
