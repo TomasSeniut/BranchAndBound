@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include "../DataStructures/definitions.h"
 #include "../utils.h"
+#include "algorithms.h"
 
 double SimpleBranchAndBoundLinkedStack(int startCity, double bound, int n, double distanceMatrix[][n], int solution[]) {
     InitializeArray(n, solution);
@@ -54,8 +55,8 @@ double SimpleBranchAndBoundLinkedStack(int startCity, double bound, int n, doubl
                 continue;
             }
 
-            double pathEstimate = problem.currentPathLength + distanceMatrix[i][startCity];
-            if (bestSolutionEstimate < pathEstimate) {
+            double lowerBound = problem.currentPathLength + GetLowerBound(n, distanceMatrix, problem.citiesVisited, i);
+            if (bestSolutionEstimate < lowerBound) {
                 continue;
             }
 

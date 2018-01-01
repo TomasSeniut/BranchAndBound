@@ -10,6 +10,7 @@
 void PopulateDistanceMatrix(point *array, int n, double distanceMatrix[][n]);
 
 void CopyArray(int n, int from[], int to[]);
+void CopyDoubleArray(int n, double from[], double to[]);
 void InvertCopyArray(int n, int from[], int to[]);
 void InitializeArray(int n, int array[]);
 int IsAllCitiesVisited(int n, int cityArray[]);

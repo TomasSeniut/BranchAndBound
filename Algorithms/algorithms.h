@@ -12,4 +12,6 @@ double SimpleBranchAndBoundDynamicStack(int startCity, double bound, int n, doub
 double SimpleBranchAndBoundLinkedStack(int startCity, double bound, int n, double distanceMatrix[][n], int solution[]);
 double ParallelBranchAndBound(int startCity, double bound, int n, double distanceMatrix[][n], int solution[]);
 
+double GetLowerBound(int n, double distanceMatrix[][n], int citiesVisited[], int cityToVisit);
+
 #endif //CREATORTEST_ALGORITHMS_H

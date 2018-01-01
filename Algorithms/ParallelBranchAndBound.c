@@ -9,6 +9,7 @@
 #include "../utils.h"
 #include "../DataStructures/definitions.h"
 #include "../DataStructures/structs.h"
+#include "algorithms.h"
 
 double ParallelBranchAndBound(int startCity, double bound, int n, double distanceMatrix[][n], int solution[]) {
     InitializeArray(n, solution);
@@ -65,10 +66,10 @@ double ParallelBranchAndBound(int startCity, double bound, int n, double distanc
             for (int i = 0; i < N; ++i) {
                 if (problem.citiesVisited[i]) {
                     continue;
-                }
 
-                double pathEstimate = problem.currentPathLength + distanceMatrix[i][startCity];
-                if (bestSolutionEstimate < pathEstimate) {
+                }
+                double lowerBound = problem.currentPathLength + GetLowerBound(n, distanceMatrix, problem.citiesVisited, i);
+                if (bestSolutionEstimate < lowerBound) {
                     continue;
                 }
 

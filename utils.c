@@ -25,6 +25,12 @@ void CopyArray(int n, int from[], int to[]) {
     }
 }
 
+void CopyDoubleArray(int n, double from[], double to[]) {
+    for (int i = 0; i < n; ++i) {
+        to[i] = from[i];
+    }
+}
+
 void InvertCopyArray(int n, int from[], int to[]) {
     for (int i = 0; i < n; ++i) {
         to[from[i]] = i;

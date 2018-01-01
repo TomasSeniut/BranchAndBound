@@ -7,5 +7,5 @@
 
 #endif //CREATORTEST_CONSTANTS_H
 
-#define N 16
-#define DATA_FILE_NAME "gg16"
+#define N 14
+#define DATA_FILE_NAME "gg14"
