@@ -33,7 +33,6 @@ double GetLowerBound(int n, double distanceMatrix[][n], int citiesVisited[], int
                     secondNearestCity = distance;
                 }
             }
-
         }
 
         if (secondNearestCity == DBL_MAX) {
