@@ -7,8 +7,6 @@
 #include <omp.h>
 #include <malloc.h>
 #include "../utils.h"
-#include "../DataStructures/definitions.h"
-#include "../DataStructures/structs.h"
 #include "algorithms.h"
 
 double ParallelBranchAndBound(int startCity, double bound, int n, double distanceMatrix[][n], int solution[]) {
@@ -54,7 +52,7 @@ double ParallelBranchAndBound(int startCity, double bound, int n, double distanc
                 #pragma omp critical
                 {
                     if (bestSolutionEstimate >= pathLength) {
-                        printf("Better solution found: %f\n", pathLength);
+                        printf("Better solution found: %f on thread %d\n", pathLength, omp_get_thread_num());
                         bestSolutionEstimate = pathLength;
                         InvertCopyArray(n, problem.citiesVisited, solution);
                     }
@@ -63,7 +61,7 @@ double ParallelBranchAndBound(int startCity, double bound, int n, double distanc
                 continue;
             }
 
-            for (int i = 0; i < N; ++i) {
+            for (int i = 0; i < n; ++i) {
                 if (problem.citiesVisited[i]) {
                     continue;
 
@@ -86,6 +84,7 @@ double ParallelBranchAndBound(int startCity, double bound, int n, double distanc
         }
 
         free(stack);
+        printf("Thread %d finished work for index %d\n", omp_get_thread_num(), j);
     }
 
     return bestSolutionEstimate;

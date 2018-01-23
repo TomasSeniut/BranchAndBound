@@ -8,7 +8,6 @@
 #include "../constants.h"
 #include "definitions.h"
 
-
 typedef struct {
     float x;
     float y;
