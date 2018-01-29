@@ -87,5 +87,6 @@ double ParallelBranchAndBound(int startCity, double bound, int n, double distanc
         printf("Thread %d finished work for index %d\n", omp_get_thread_num(), j);
     }
 
+    printf("Algorithm used %d threads for finding solution\n", omp_get_max_threads());
     return bestSolutionEstimate;
 }
