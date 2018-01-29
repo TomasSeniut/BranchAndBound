@@ -20,7 +20,7 @@ double ParallelBranchAndBound(int startCity, double bound, int n, double distanc
     InitializeArray(n, initialProblem.citiesVisited);
     initialProblem.citiesVisited[initialProblem.currentCity] = initialProblem.stepsTaken + 1;
 
-    #pragma omp parallel for
+    #pragma omp parallel for ordered
     for (int j = 0; j < n; ++j) {
         if (initialProblem.currentCity == j) {
             continue;
@@ -61,6 +61,7 @@ double ParallelBranchAndBound(int startCity, double bound, int n, double distanc
                 continue;
             }
 
+            //#pragma omp parallel for ordered
             for (int i = 0; i < n; ++i) {
                 if (problem.citiesVisited[i]) {
                     continue;
