@@ -1,2 +1,2 @@
-solution = [ 0, 13, 15, 16, 3, 5, 18, 17, 7, 4, 10, 12, 1, 11, 8, 19, 6, 9, 2, 14 ]
-dataFileName = "../tsp_data/gg20.tsp"
+solution = [ 0, 13, 14, 11, 2, 17, 4, 19, 16, 5, 12, 21, 18, 7, 20, 10, 3, 9, 15, 6, 8, 1 ]
+dataFileName = "../tsp_data/ag22.tsp"

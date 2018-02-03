@@ -1,7 +1,7 @@
 
-#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <omp.h>
 #include "InputOutput/InputOutput.h"
 #include "Algorithms/algorithms.h"
 #include "utils.h"
@@ -26,11 +26,11 @@ int main(int argc, char *argv[]) {
     double pathEstimate = BestOfNNearestNeighbourMethod(5, realN, distanceArray, solution);
     printf("Best estimate from heuristics: %f\n", pathEstimate);
 
-    clock_t start = clock();
+    double start = omp_get_wtime();
     double path = ParallelBranchAndBound(0, pathEstimate, realN, distanceArray, solution);
-    clock_t duration = clock() - start;
+    double duration = omp_get_wtime() - start;
 
-    printf("It took %ld clicks (%f seconds) for parallel algorithm.\n", duration, ((float) duration) / CLOCKS_PER_SEC);
+    printf("It took %f seconds for parallel algorithm.\n", duration);
 
     PrintResult(path, realN, solution);
     WriteResultToPythonFile("../Plotting/solution.py", realN, solution, dataFileName);
